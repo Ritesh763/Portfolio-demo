@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ritesh Kumar — Portfolio</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --card: #16161f;
+      --border: rgba(255, 255, 255, 0.07);
+      --accent: #6ee7b7;
+      --accent2: #818cf8;
+      --accent3: #f472b6;
+      --text: #f0f0f8;
+      --muted: #8888aa;
+      --glow: rgba(110, 231, 183, 0.15);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, opacity 0.2s;
+      mix-blend-mode: screen;
+    }
+
+    .cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.1s ease;
+      opacity: 0.5;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.3;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(110, 231, 183, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(110, 231, 183, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-orb1 {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(110, 231, 183, 0.08) 0%, transparent 70%);
+      right: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .hero-orb2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(129, 140, 248, 0.07) 0%, transparent 70%);
+      left: 200px;
+      bottom: 50px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(110, 231, 183, 0.3);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    .hero-name span {
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      color: var(--muted);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 500px;
+      margin-bottom: 3rem;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.6rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: all 0.25s ease;
+      cursor: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a0f;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: #a7f3d0;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(110, 231, 183, 0.25);
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 3.5rem;
+      line-height: 1.1;
+    }
+
+    /* SKILLS */
+    .skills-section {
+      background: var(--surface);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .skill-card:hover {
+      border-color: rgba(110, 231, 183, 0.25);
+      transform: translateY(-3px);
+    }
+
+    .skill-card:hover::before {
+      opacity: 1;
+    }
+
+    .skill-category {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.9rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      padding: 0.3rem 0.7rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .tag:hover {
+      background: rgba(110, 231, 183, 0.08);
+      border-color: rgba(110, 231, 183, 0.3);
+      color: var(--accent);
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(110, 231, 183, 0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      border-color: rgba(110, 231, 183, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .project-num {
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .project-date {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .project-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-points li {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.6;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .project-points li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.65rem;
+      top: 0.1rem;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .tech-tag {
+      font-size: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(110, 231, 183, 0.07);
+      border: 1px solid rgba(110, 231, 183, 0.2);
+      border-radius: 2px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    /* EDUCATION */
+    .edu-section {
+      background: var(--surface);
+    }
+
+    .edu-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .edu-timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      opacity: 0.3;
+    }
+
+    .edu-item {
+      position: relative;
+      padding: 0 0 2.5rem 2.5rem;
+    }
+
+    .edu-item::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 6px;
+      width: 9px;
+      height: 9px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(110, 231, 183, 0.5);
+    }
+
+    .edu-degree {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-school {
+      color: var(--accent);
+      font-size: 1.0rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .edu-meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* CERTIFICATIONS */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem;
+      transition: all 0.25s;
+      position: relative;
+    }
+
+    .cert-card:hover {
+      border-color: rgba(129, 140, 248, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .cert-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .cert-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
+    }
+
+    .cert-issuer {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .cert-date {
+      font-size: 0.65rem;
+      color: var(--accent2);
+      margin-top: 0.3rem;
+    }
+
+    /* TRAINING */
+    .training-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border-left: 3px solid var(--accent);
+      transition: all 0.25s;
+    }
+
+    .training-card:hover {
+      transform: translateX(4px);
+      background: rgba(22, 22, 31, 0.9);
+    }
+
+    .training-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .training-date {
+      font-size: 0.7rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .training-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .training-points li {
+      font-size: 1.05rem;
+      color: var(--muted);
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .training-points li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* CONTACT */
+    .contact-section {
+      background: var(--surface);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.25s;
+    }
+
+    .contact-card:hover {
+      border-color: rgba(110, 231, 183, 0.35);
+      transform: translateY(-3px);
+    }
+
+    .contact-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .contact-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-value {
+      font-size: 0.82rem;
+      color: var(--accent);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(110, 231, 183, 0.3);
+      border-radius: 2px;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links {
+        gap: 1.2rem;
+      }
+
+      .hero,
+      section {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .hero {
+        padding-top: 6rem;
+      }
+    }
+
+    /* CV Download button special */
+    .btn-download {
+      background: linear-gradient(135deg, var(--accent2), var(--accent3));
+      color: white;
+      font-weight: 500;
+      border: none;
+    }
+
+    .btn-download:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(129, 140, 248, 0.3);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: fadeUp 0.7s 0.6s ease both;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      animation: scroll-pulse 2s ease infinite;
+    }
+
+    @keyframes scroll-pulse {
+
+      0%,
+      100% {
+        opacity: 0.3;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .availability-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-right: 0.4rem;
+      animation: pulse-dot 2s ease infinite;
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(110, 231, 183, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 0 5px rgba(110, 231, 183, 0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">RK.DEV</div>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-orb1"></div>
+    <div class="hero-orb2"></div>
+    <div class="hero-content">
+      <div class="hero-tag"><span class="availability-dot"></span>Open to opportunities</div>
+      <h1 class="hero-name">Ritesh<br /><span>Kumar</span></h1>
+      <p class="hero-subtitle">Full-Stack Developer & Cloud Enthusiast</p>
+      <p class="hero-desc">
+        B.Tech CSE student at Lovely Professional University, building scalable MERN stack applications, cloud-native
+        systems, and data-driven platforms. Passionate about turning complex problems into elegant solutions.
+      </p>
+      <div class="hero-links">
+        <a href="mailto:Riteshk9215@gmail.com" class="btn btn-primary">✉ Get In Touch</a>
+        <a href="https://github.com/Ritesh763" target="_blank" class="btn btn-ghost">⟨/⟩ GitHub</a>
+        <a href="https://linkedin.com/in/ritesh-kumar/" target="_blank" class="btn btn-ghost">in LinkedIn</a>
+        <a href="#" class="btn btn-download" onclick="downloadCV(event)">↓ Download CV</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="skills-section">
+    <div class="section-label">Technical Arsenal</div>
+    <h2 class="section-title">Skills & Technologies</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-category">Languages</div>
+        <div class="skill-tags">
+          <span class="tag">Java</span>
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-category">Frameworks & Libraries</div>
+        <div class="skill-tags">
+          <span class="tag">React.js</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Express.js</span>
+          <span class="tag">Chart.js</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-category">Cloud — AWS</div>
+        <div class="skill-tags">
+          <span class="tag">EC2</span>
+          <span class="tag">S3</span>
+          <span class="tag">RDS</span>
+          <span class="tag">Lambda</span>
+          <span class="tag">VPC</span>
+          <span class="tag">IAM</span>
+          <span class="tag">CloudFront</span>
+          <span class="tag">Route 53</span>
+          <span class="tag">Redshift</span>
+          <span class="tag">Glue</span>
+          <span class="tag">CloudWatch</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-category">DevOps & Tools</div>
+        <div class="skill-tags">
+          <span class="tag">Docker</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">Git</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">Postman</span>
+          <span class="tag">AWS Cloud9</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-category">Architecture</div>
+        <div class="skill-tags">
+          <span class="tag">Microservices</span>
+          <span class="tag">Serverless</span>
+          <span class="tag">RESTful APIs</span>
+          <span class="tag">Containerization</span>
+          <span class="tag">MERN Stack</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-category">Database</div>
+        <div class="skill-tags">
+          <span class="tag">MongoDB</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">AWS RDS</span>
+          <span class="tag">Redshift</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Work Showcase</div>
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-num">Project 01 · Feb 2026</div>
+        <h3 class="project-title">CS-Foundation Platform</h3>
+        <p class="project-date">MERN Stack · <a href="https://github.com/Ritesh763" target="_blank"
+            style="color:var(--accent);text-decoration:none;">GitHub ↗</a></p>
+        <ul class="project-points">
+          <li>Comprehensive placement preparation platform for core CS fundamentals.</li>
+          <li>Interactive quizzes for OS, DBMS, Computer Networks & DSA with 1000+ questions.</li>
+          <li>Real-time progress tracking dashboard with performance analytics.</li>
+          <li>Integrated NLP-powered chatbot for instant doubt resolution.</li>
+        </ul>
+        <div class="project-tech">
+          <span class="tech-tag">MongoDB</span>
+          <span class="tech-tag">Express.js</span>
+          <span class="tech-tag">React.js</span>
+          <span class="tech-tag">Node.js</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-num">Project 02 · Mar 2026</div>
+        <h3 class="project-title">Job Market Trends Analyzer</h3>
+        <p class="project-date">Full-Stack Data Platform · <a href="https://github.com/Ritesh763" target="_blank"
+            style="color:var(--accent);text-decoration:none;">GitHub ↗</a></p>
+        <ul class="project-points">
+          <li>Full-stack analyzer to collect and visualize job market data via APIs and datasets.</li>
+          <li>Identifies most in-demand skills, salary trends & top hiring companies.</li>
+          <li>Interactive dashboards with bar charts and pie charts for actionable insights.</li>
+          <li>RESTful APIs via Node.js & Express for efficient data handling and retrieval.</li>
+        </ul>
+        <div class="project-tech">
+          <span class="tech-tag">MongoDB</span>
+          <span class="tech-tag">Express.js</span>
+          <span class="tech-tag">React.js</span>
+          <span class="tech-tag">Node.js</span>
+          <span class="tech-tag">Chart.js</span>
+          <span class="tech-tag">REST APIs</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TRAINING -->
+  <section style="padding-top:0; padding-bottom:6rem; padding-left:4rem; padding-right:4rem;">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title">Training & Bootcamps</h2>
+
+    <div class="training-card reveal">
+      <div class="training-title">Java Placement Ace Bootcamp — LPU</div>
+      <div class="training-date">Jun 2025 – Jul 2025 · Certificate Awarded</div>
+      <ul class="training-points">
+        <li>Completed a 1-month intensive Java Placement Ace Bootcamp on core Java and problem-solving.</li>
+        <li>Hands-on experience with OOP concepts, collections, and basic backend development.</li>
+        <li>Solved multiple coding challenges on LeetCode, strengthening DSA and analytical skills.</li>
+        <li>Built a Java-based project applying concepts to real-world scenarios.</li>
+      </ul>
+    </div>
+
+    <div class="section-label" style="margin-top:1rem;">Activities</div>
+    <div
+      style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:1rem; margin-top:1.2rem;">
+      <div class="cert-card reveal">
+        <div class="cert-icon">💻</div>
+        <div class="cert-name">LeetCode & Codeforces Practice</div>
+        <div class="cert-issuer">Active competitive programmer</div>
+        <div class="cert-date">Mar 2026</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">🔐</div>
+        <div class="cert-name">Cyber Security Workshop</div>
+        <div class="cert-issuer">3-day event — basic security concepts</div>
+        <div class="cert-date">Apr 2024</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">☕</div>
+        <div class="cert-name">Java Placement Bootcamp</div>
+        <div class="cert-issuer">Hands-on coding & project development</div>
+        <div class="cert-date">Jun 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications" style="background:var(--surface); padding:6rem 4rem;">
+    <div class="section-label">Credentials</div>
+    <h2 class="section-title">Certifications</h2>
+    <div class="certs-grid">
+      <a href="React.png" target="_blank" class="cert-card reveal"
+        style="cursor: pointer; text-decoration: none; color: inherit; display: block;">
+        <div class="cert-icon">⚛️</div>
+        <div class="cert-name">Big React.js Course with AI</div>
+        <div class="cert-issuer">Udemy</div>
+        <div class="cert-date">Mar 2026</div>
+      </a>
+      <a href="PYTHON.png" target="_blank" class="cert-card reveal"
+        style="cursor: pointer; text-decoration: none; color: inherit; display: block;">
+        <div class="cert-icon">🐍</div>
+        <div class="cert-name">The Complete Python Pro Bootcamp</div>
+        <div class="cert-issuer">Udemy</div>
+        <div class="cert-date">Feb 2024</div>
+      </a>
+      <a href="AFEECTIVE.png" target="_blank" class="cert-card reveal"
+        style="cursor: pointer; text-decoration: none; color: inherit; display: block;">
+        <div class="cert-icon">🧠</div>
+        <div class="cert-name">Affective Computing</div>
+        <div class="cert-issuer">NPTEL</div>
+        <div class="cert-date">May 2025</div>
+      </a>
+      <a href="AWS.png" target="_blank" class="cert-card reveal"
+        style="cursor: pointer; text-decoration: none; color: inherit; display: block;">
+        <div class="cert-icon">☁️</div>
+        <div class="cert-name">AWS Certification of Completion</div>
+        <div class="cert-issuer">Canav</div>
+        <div class="cert-date">Feb 2026</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="edu-section" style="padding:6rem 4rem;">
+    <div class="section-label">Academic Journey</div>
+    <h2 class="section-title">Education</h2>
+    <div class="edu-timeline">
+      <div class="edu-item reveal">
+        <div class="edu-degree">B.Tech — Computer Science & Engineering</div>
+        <div class="edu-school">Lovely Professional University, Phagwara, Punjab</div>
+        <div class="edu-meta">Since Aug 2023 · CGPA: 6.18</div>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-degree">Intermediate (Class XII)</div>
+        <div class="edu-school">Govt High School, Masarah, Ara, Bihar</div>
+        <div class="edu-meta">Mar 2020 – Mar 2022</div>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-degree">Matriculation (Class X)</div>
+        <div class="edu-school">Baldev High School, Dinara, Rohtas, Bihar</div>
+        <div class="edu-meta">Mar 2018 – Mar 2020</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section" style="padding:6rem 4rem;">
+    <div class="section-label">Let's Connect</div>
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-grid">
+      <a href="mailto:Riteshk9215@gmail.com" class="contact-card reveal">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">Riteshk9215@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://linkedin.com/in/ritesh-kumar/" target="_blank" class="contact-card reveal">
+        <div class="contact-icon">💼</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">linkedin.com/in/ritesh-kumar</div>
+        </div>
+      </a>
+      <a href="https://github.com/Ritesh763" target="_blank" class="contact-card reveal">
+        <div class="contact-icon">⟨/⟩</div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">github.com/Ritesh763</div>
+        </div>
+      </a>
+      <a href="tel:+919234297714" class="contact-card reveal">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-label">Mobile</div>
+          <div class="contact-value">+91 9234297714</div>
+        </div>
+      </a>
+    </div>
+
+    <div style="margin-top:3rem; text-align:center;">
+      <a href="#" class="btn btn-download" style="display:inline-flex; font-size:0.85rem; padding:0.9rem 2.2rem;"
+        onclick="downloadCV(event)">
+        ↓ Download Resume / CV
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Designed & Built by <span style="color:var(--accent)">Ritesh Kumar</span> · B.Tech CSE · LPU · 2026</p>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx - 6 + 'px';
+      cursor.style.top = my - 6 + 'px';
+    });
+    function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx - 18 + 'px';
+      ring.style.top = ry - 18 + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+    document.querySelectorAll('a, button, .skill-card, .project-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.transform = 'scale(1.4)'; });
+      el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => obs.observe(el));
+
+    // Download CV - downloads the actual PDF file
+    function downloadCV(e) {
+      e.preventDefault();
+      const link = document.createElement('a');
+      link.href = '12320895-Ritesh-37.pdf';
+      link.download = 'Ritesh-Kumar-CV.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+
+</html>
